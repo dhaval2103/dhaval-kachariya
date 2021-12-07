@@ -9,6 +9,7 @@ return array(
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\DataTables\\CategoryDatatable' => $baseDir . '/app/DataTables/CategoryDatatable.php',
     'App\\DataTables\\UserDatatable' => $baseDir . '/app/DataTables/UserDatatable.php',
+    'App\\DataTables\\roledatatable' => $baseDir . '/app/DataTables/roledatatable.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
     'App\\Http\\Controllers\\Auth\\ConfirmPasswordController' => $baseDir . '/app/Http/Controllers/Auth/ConfirmPasswordController.php',
     'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => $baseDir . '/app/Http/Controllers/Auth/ForgotPasswordController.php',

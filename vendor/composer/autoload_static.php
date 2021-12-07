@@ -663,6 +663,7 @@ class ComposerStaticInit9b90c66d114ca4f36e769a5bea8518d5
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\DataTables\\CategoryDatatable' => __DIR__ . '/../..' . '/app/DataTables/CategoryDatatable.php',
         'App\\DataTables\\UserDatatable' => __DIR__ . '/../..' . '/app/DataTables/UserDatatable.php',
+        'App\\DataTables\\roledatatable' => __DIR__ . '/../..' . '/app/DataTables/roledatatable.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Http\\Controllers\\Auth\\ConfirmPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ConfirmPasswordController.php',
         'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
