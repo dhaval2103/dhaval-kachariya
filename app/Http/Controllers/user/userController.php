@@ -8,10 +8,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\EducationValidation;
 use App\Http\Requests\UserValidation;
 use App\Models\blog;
+use App\Models\Permission;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Contracts\Permission as ContractsPermission;
 use Spatie\Permission\Models\Role;
 
 class userController extends Controller
@@ -93,8 +95,10 @@ class userController extends Controller
     public function edituser(Request $request)
     {
         $query = User::where('id', $request->id)->first();
-
+        $role = Role::find($request->id);
+        // $rolePermissions = DB::table("model_has_roles")->where("model_has_roles.role_id", $request->id)->first();
         return Response()->json($query);
+        // return view('admin.userdetail', compact('role'));
     }
 
 

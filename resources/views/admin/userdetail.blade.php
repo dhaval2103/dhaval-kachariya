@@ -63,7 +63,7 @@
                                                 <span style="color: red">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        {{--  <div class="form-group">
+                                        {{-- <div class="form-group">
                                             <label for="recipient-name" class="col-form-label">Role :</label><br>
                                             <select style="width: 465px" class="form-control js-example-basic-multiple" multiple name="Role[]"
                                                 required>
@@ -76,7 +76,7 @@
                                             @error('role')
                                                 <span style="color: red">{{ $message }}</span>
                                             @enderror
-                                        </div>  --}}
+                                        </div> --}}
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary"
                                                 data-dismiss="modal">Close</button>
@@ -158,6 +158,20 @@
                                         <label for="email" class="col-form-label">Email :</label><br>
                                         <input type="email" class="form-control email" name="email">
                                         @error('email')
+                                            <span style="color: red">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="recipient-name" class="col-form-label">Role :</label><br>
+                                        <select style="width: 465px" class="form-control js-example-basic-multiple" multiple
+                                            name="role[]" required>
+                                            <option value="" disabled>Assign Role</option>
+                                            @foreach ($permission as $permissions)
+                                                <option value="{{ $permissions->id }}" @if ($permissions->id) selected @endif>
+                                                    {{ $permissions->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('role')
                                             <span style="color: red">{{ $message }}</span>
                                         @enderror
                                     </div>
@@ -570,6 +584,7 @@
                     $('.userofid').val(response.id);
                     $('.uname').val(response.name);
                     $('.email').val(response.email);
+                    $('.role').val(response.name);
                 }
 
             });
