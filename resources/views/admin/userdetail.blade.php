@@ -163,12 +163,11 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="recipient-name" class="col-form-label">Role :</label><br>
-                                        <select style="width: 465px" class="form-control js-example-basic-multiple" multiple
-                                            name="role[]" required>
+                                        <select style="width: 465px" class="form-control roles" name="role" required>
                                             <option value="" disabled>Assign Role</option>
-                                            @foreach ($permission as $permissions)
-                                                <option value="{{ $permissions->id }}" @if ($permissions->id) selected @endif>
-                                                    {{ $permissions->name }}</option>
+                                            @foreach ($role as $roles)
+                                                <option value="{{ $roles->id }}">
+                                                    {{ $roles->name }}</option>
                                             @endforeach
                                         </select>
                                         @error('role')
@@ -375,9 +374,6 @@
                 'endyear': {
                     required: true
                 },
-                'role': {
-                    required: true
-                },
             },
             messages: {
                 'education': {
@@ -388,9 +384,6 @@
                 },
                 'endyear': {
                     required: "Please Select End Of Education Year...!!!"
-                },
-                'role': {
-                    required: "Please Select Role...!!!"
                 },
             },
             submitHandler: function(form) {
@@ -579,12 +572,12 @@
                     id: id
                 },
                 success: function(response) {
-
-                    // $('#exampleModalLabel').html('Education');
-                    $('.userofid').val(response.id);
-                    $('.uname').val(response.name);
-                    $('.email').val(response.email);
+                    $('.userofid').val(response.que.id);
+                    $('.uname').val(response.que.name);
+                    $('.email').val(response.que.email);
                     $('.role').val(response.name);
+                    $('.roles').val(response.role);
+
                 }
 
             });
@@ -685,11 +678,9 @@
                     processData: false,
                     data: new FormData(form),
                     success: function(data) {
-                        if (data == 1) {
-                            $('#userdatatable-table').DataTable().ajax.reload();
-                            $('#usereditmodal').modal('hide');
-                            toastr.success('Update Successfully');
-                        }
+                        $('#userdatatable-table').DataTable().ajax.reload();
+                        $('#usereditmodal').modal('hide');
+                        toastr.success('Update Successfully');
                     },
                     error: function(response) {
                         console.log(response);

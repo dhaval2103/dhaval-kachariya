@@ -20,8 +20,8 @@ class userController extends Controller
 {
     public function showdata(UserDatatable $request)
     {
-        $permission = Role::all();
-        return $request->render('admin.userdetail', compact('permission'));
+        $role = Role::all();
+        return $request->render('admin.userdetail', compact('role'));
     }
 
     public function addeducation(Request $request)
@@ -95,24 +95,27 @@ class userController extends Controller
     public function edituser(Request $request)
     {
         $query = User::where('id', $request->id)->first();
-        $role = Role::find($request->id);
-        // $rolePermissions = DB::table("model_has_roles")->where("model_has_roles.role_id", $request->id)->first();
-        return Response()->json($query);
-        // return view('admin.userdetail', compact('role'));
+        $role = $query->roles->pluck('id')->first();
+        return Response()->json(['que' => $query, 'role' => $role]);
     }
 
 
     public function updateuser(UserValidation $request)
     {
-
         $input = $request->all();
         if ($input['id']) {
             $arr = [
                 'name' => $request->uname,
                 'email' => $request->email,
             ];
-            User::where('id', $input['id'])->update($arr);
-            return response()->json('1');
+            // User::where('id', $input['id'])->update($arr);
+            // return response()->json('1');
+            // $user=User::where('id', $input['id'])->update($arr);
+            $user = User::find($input['id']);
+            $user->update($arr);
+            DB::table('model_has_roles')->where('model_id', $input['id'])->delete();
+            $user->assignRole($request->input('role'));
+            return response()->json(['u' => $user]);
         }
     }
 

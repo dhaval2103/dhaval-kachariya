@@ -23,21 +23,20 @@ class UserDatatable extends DataTable
             ->eloquent($query)
             ->addColumn('action', function ($data) {
                 $id = $data->id;
-                return '<button type="button" class="btn btn-secondary edituser" data-id="' . $data->id . '" data-toggle="modal" data-target="#usereditmodal" data-whatever="@mdo" ><i class="fas fa-edit"></i></button>
-                <button class="btn btn-danger" id="deletedata" data-id="' . $data->id . '"><i class="fas fa-trash"></i></button>
-                <button type="button" class="btn btn-info ids" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" data-id="' . $data->id . '"><i class="fas fa-plus"></i></button>
-                <button type="button" class="btn btn-light view" data-id="' . $data->id . '" data-toggle="modal" data-target="#viewmodal" data-whatever="@mdo" ><i class="fas fa-eye"></i></button>
+                return '<button type="button" class="btn btn-light edituser" data-id="' . $data->id . '" data-toggle="modal" data-target="#usereditmodal" data-whatever="@mdo" ><i class="fas fa-edit" style="color:green"></i></button>
+                <button class="btn btn-light" id="deletedata" data-id="' . $data->id . '"><i class="fas fa-trash" style="color:red"></i></button>
+                <button type="button" class="btn btn-light ids" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" data-id="' . $data->id . '"><i class="fas fa-plus"></i></button>
+                <button type="button" class="btn btn-light view" data-id="' . $data->id . '" data-toggle="modal" data-target="#viewmodal" data-whatever="@mdo" ><i class="fas fa-eye" style="color:blue"></i></button>
                 <a href="' . route("admin.userblog", $id) . '"><b>Blog</b></a>';
             })
             ->editColumn('<input type="checkbox" class="check-input allselect"  name="allselect[]">', function ($data) {
                 return '<input type="checkbox" class="check-input multicheck"  name="multicheck[]"  data-id="' . $data->id . '">';
             })
-            ->editcolumn('Role', function ($data) {
-
+            ->addcolumn('role', function ($data) {
                 $user = User::find($data->id);
-                return $user->roles->pluck('name');
+                return $user->roles->pluck('name')->all();
             })
-            ->rawColumns(['action', '<input type="checkbox" class="check-input allselect"  name="allselect[]">', 'Role'])
+            ->rawColumns(['action', '<input type="checkbox" class="check-input allselect"  name="allselect[]">', 'role'])
             ->addIndexColumn();
     }
 
@@ -92,7 +91,7 @@ class UserDatatable extends DataTable
                 ->addClass('text-center'),
             Column::make('name'),
             Column::make('email'),
-            Column::make('Role'),
+            Column::make('role'),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
