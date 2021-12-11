@@ -39,7 +39,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('users', userController::class);
     Route::resource('categories', CategoryController::class);
 });
-
+// Route::middleware(['throttle:ip_address'])->group(function () {
+//     Route::get('category', [CategoryController::class, 'category'])->name('crud.category');
+// });
 Route::get('category', [CategoryController::class, 'category'])->name('crud.category');
 Route::post('addcategory', [CategoryController::class, 'addcategory'])->name('crud.insert');
 Route::post('deletecategory', [CategoryController::class, 'deleteform'])->name('crud.delete');
