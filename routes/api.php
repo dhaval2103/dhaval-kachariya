@@ -21,8 +21,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('register', 'Registercontroller@register');
 Route::post('login', 'Registercontroller@login');
-Route::post('userupdate', 'Registercontroller@userupdate');
-Route::get('userdelete', 'Registercontroller@userdelete');
+
 
 Route::middleware('auth:api')->group(function () {
     // Route::resource('products', Productcontroller::class);
@@ -33,4 +32,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('productsearch', 'Productcontroller@search');
     Route::post('fileupload', 'Productcontroller@fileupload');
     Route::post('productshow', 'Productcontroller@productshow');
+    Route::post('userupdate', 'Registercontroller@userupdate');
+    Route::get('userdelete', 'Registercontroller@userdelete');
+    Route::post('logout', 'Registercontroller@logout');
 });

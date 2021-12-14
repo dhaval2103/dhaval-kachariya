@@ -44,6 +44,17 @@ class Registercontroller extends Basecontroller
         }
     }
 
+    public function logout(Request $request)
+    {
+        if (Auth::user()) {
+            $token = Auth::user()->token();
+            $token->revoke();
+            return $this->sendResponse(null, 'User Is Logout');
+        } else {
+            return $this->sendError('Something Wrong');
+        }
+    }
+
     public function userupdate(Request $request)
     {
         $user = User::find($request->id);

@@ -21,6 +21,7 @@ class Productcontroller extends Basecontroller
         $request->validate([
             'name' => 'required',
             'details' => 'required',
+            'price' => 'required',
         ]);
         $input = $request->all();
         $product = Product::create($input);
@@ -52,11 +53,19 @@ class Productcontroller extends Basecontroller
 
     public function productshow(Request $request)
     {
-        $product = Product::find($request->id);
+        // $product = Product::orderBy('price')->get();
+        // if (is_null($product)) {
+        //     return $this->sendError('Product Not Found.');
+        // }
+        // return $this->sendResponse($product, 'Product Retrieved Successfully');
+
+        $limit = $request->lastid ? $request->lastid : 0;
+        $start = $request->pagesize ? $request->pagesize : 10;
+        $product = Product::where('id', '>', $start)->limit($limit)->get();
         if (is_null($product)) {
             return $this->sendError('Product Not Found.');
         }
-        return $this->sendResponse($product, 'Product Retrieved Successfully');
+        return $this->sendResponse($product, 'Product Display Successfully');
     }
 
     public function fileupload(Request $request)
