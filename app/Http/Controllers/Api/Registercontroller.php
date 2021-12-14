@@ -43,4 +43,17 @@ class Registercontroller extends Basecontroller
             return $this->sendError('Unauthorised.', ['error' => 'Unauthorised']);
         }
     }
+
+    public function userupdate(Request $request)
+    {
+        $user = User::find($request->id);
+        $user->update($request->all());
+        return $this->sendResponse($user, 'User Updated Successfully.');
+    }
+
+    public function userdelete(Request $request)
+    {
+        $user = User::where('id', $request->id)->delete($request->id);
+        return $this->sendResponse($user, 'User Delete Successfully.');
+    }
 }
