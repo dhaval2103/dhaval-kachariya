@@ -59,13 +59,23 @@ class Productcontroller extends Basecontroller
         // }
         // return $this->sendResponse($product, 'Product Retrieved Successfully');
 
-        $limit = $request->lastid ? $request->lastid : 0;
-        $start = $request->pagesize ? $request->pagesize : 10;
-        $product = Product::where('id', '>', $start)->limit($limit)->get();
-        if (is_null($product)) {
+        $limit = $request->pagesize ? $request->pagesize : 0;
+        $start = $request->lastid ? $request->lastid : 10;
+        $product = Product::where('id', '>', $start)->limit($limit)->orderBy('price');
+        // $product = Product::where('id', '>', $start)->limit($limit)->orderBy('price', 'desc');
+        if ($request->search) {
+            $product = $product->where('name', 'LIKE', '%' . $request->search . '%');
+        }
+        $min_price = $request->min_price;
+        $max_price = $request->max_price;
+        if ($min_price && $max_price) {
+            $product->whereBetween('price', [$min_price, $max_price]);
+        }
+        $result = $product->get();
+        if (is_null($result)) {
             return $this->sendError('Product Not Found.');
         }
-        return $this->sendResponse($product, 'Product Display Successfully');
+        return $this->sendResponse($result, 'Product Display Successfully.');
     }
 
     public function fileupload(Request $request)
@@ -85,7 +95,7 @@ class Productcontroller extends Basecontroller
             $add->save();
             return response()->json([
                 "success" => true,
-                "message" => "File successfully uploaded",
+                "message" => "File successfully uploaded.",
             ]);
         }
     }

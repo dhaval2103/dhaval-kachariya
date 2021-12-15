@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin;
 use App\Models\User;
 use Validator;
 use Illuminate\Http\Request;
@@ -34,11 +35,12 @@ class Registercontroller extends Basecontroller
     {
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $user = Auth::user();
-            $result = array(
-                'token' => $user->createToken('MyApp')->accessToken,
-                'user' => $user
-            );
-            return $this->sendResponse($result, 'User Login Successfully.');
+            // $result = array(
+            //     'token' => $user->createToken('MyApp')->accessToken,
+            //     'user' => $user
+            // );
+            $user->token = $user->createToken('MyApp')->accessToken;
+            return $this->sendResponse($user, 'User Login Successfully.');
         } else {
             return $this->sendError('Unauthorised.', ['error' => 'Unauthorised']);
         }
@@ -66,5 +68,13 @@ class Registercontroller extends Basecontroller
     {
         $user = User::where('id', $request->id)->delete($request->id);
         return $this->sendResponse($user, 'User Delete Successfully.');
+    }
+
+    public function admindashboard()
+    {
+        $users = Admin::all();
+        $success =  $users;
+
+        return response()->json($success, 200);
     }
 }
